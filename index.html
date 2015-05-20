@@ -33,7 +33,22 @@
 
       <h3>Dataset Integration Workflow</h3>
 
-      <p>To integrate this MSC on the Web, we use the <a href="https://github.com/CEDAR-project/Integrator" target="_blank">Integrator</a>, a framework for integrating any kind of MSC using Web technology. The dataset is converted to RDF and integrated using Web vocabularies. The result is served through <a href="http://lod.cedar-project.nl/uk-messy/sparql" target="_blank">this SPARQL endpoint</a> (use the named graphs &lt;urn:graph:uk-messy:raw-data&gt;, &lt;urn:graph:uk-messy:rules&gt; and &lt;urn:graph:uk-messy:release&gt;).</p>
+      <p>To integrate this MSC on the Web, we use the <a href="https://github.com/CEDAR-project/Integrator" target="_blank">Integrator</a>, a framework for integrating any kind of MSC using Web technology. The dataset is converted to RDF and integrated using Web vocabularies. The result is served through <a href="http://lod.cedar-project.nl/uk-messy/sparql" target="_blank">this SPARQL endpoint</a> (use the named graphs &lt;urn:graph:uk-messy:raw-data&gt;, &lt;urn:graph:uk-messy:rules&gt; and &lt;urn:graph:uk-messy:release&gt;). The following example query shows the resulting integration for a subset of the MSC:</p>
+
+      <pre>PREFIX tablink: &lt;http://bit.ly/cedar-tablink#&gt;
+PREFIX cedar: &lt;http://bit.ly/cedar#&gt;
+PREFIX qb: &lt;http://purl.org/linked-data/cube#&gt;
+PREFIX sdmx-dimension: &lt;http://purl.org/linked-data/sdmx/2009/dimension#&gt;
+
+SELECT ?obs ?year ?force ?type ?offence
+FROM &lt;urn:graph:uk-messy:release&gt;
+WHERE {
+    ?obs a qb:Observation ;
+         sdmx-dimension:refPeriod ?year ;
+         sdmx-dimension:refArea ?force ;
+         cedar:offenceType ?type ;
+         cedar:population ?offence .
+}</pre>
 
       <h4>Data Location Definitions</h4>
 
